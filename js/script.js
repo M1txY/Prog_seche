@@ -113,3 +113,6 @@ function displayResult(result) {
     resultDiv.appendChild(document.createElement('br')); // Adding a line break between tables
     resultDiv.appendChild(tablePercentage);
 }
+
+
+// rajouter des option pour modifier les % par protéines, lipides et glucides pour les personnes qui ont des besoins spécifiques
