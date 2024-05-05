@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macro Calculator</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="calculator">
+        <h1>Macro Calculator</h1>
+        <div class="input-group">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight">
+        </div>
+        <div class="input-group">
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height">
+        </div>
+        <div class="input-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age">
+        </div>
+        <div class="input-group">
+            <label for="duration">Duration of Workout (hours):</label>
+            <input type="number" step="0.5" id="duration">
+        </div>
+        <button onclick="calculate()">Calculate</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
