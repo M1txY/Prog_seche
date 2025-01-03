@@ -45,35 +45,98 @@
         }
 
         h1 {
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
             color: var(--text-primary);
-            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
             text-align: center;
+            font-weight: 700;
+        }
+
+        .gender-switch {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: var(--input-bg);
+            border-radius: 12px;
+            padding: 0.5rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .gender-switch input[type="radio"] {
+            opacity: 0;
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+
+        .gender-label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            user-select: none;
+        }
+
+        .gender-label:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .gender-label i {
+            font-size: 1.2rem;
+        }
+
+        .gender-switch input[type="radio"]:checked + .gender-label {
+            color: white;
+            font-weight: 500;
+        }
+
+        #male:checked + .gender-label {
+            background: #3b82f6;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+        }
+
+        #female:checked + .gender-label {
+            background: #ec4899;
+            box-shadow: 0 2px 4px rgba(236, 72, 153, 0.2);
         }
 
         .input-group {
             margin-bottom: 1.8rem;
             position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-wrapper {
+            position: relative;
+            width: 100%;
         }
 
         label {
             display: block;
             margin-bottom: 0.8rem;
+            font-weight: 500;
             color: var(--text-secondary);
             font-size: 0.95rem;
-            font-weight: 500;
         }
 
         input {
             width: 100%;
-            padding: 1rem 1.2rem;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
             border-radius: 12px;
-            color: var(--text-primary);
             font-size: 1rem;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            background: var(--input-bg);
+            color: var(--text-primary);
         }
 
         input:focus {
@@ -90,18 +153,6 @@
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
-        }
-
-        .input-group {
-            margin-bottom: 1.8rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .input-wrapper {
-            position: relative;
-            width: 100%;
         }
 
         .input-group i {
@@ -138,12 +189,10 @@
         }
 
         .result {
-            margin-top: 1.8rem;
-            padding: 1.2rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
             border-radius: 12px;
             background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
             text-align: center;
             font-weight: 500;
             display: none;
@@ -173,20 +222,6 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
             margin-bottom: 2rem;
-        }
-
-        @media (max-width: 640px) {
-            .calculator, .tips-container {
-                padding: 1.5rem;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            input {
-                padding: 0.8rem 1rem;
-            }
         }
 
         .tips-title {
@@ -224,11 +259,39 @@
             font-size: 0.95rem;
             line-height: 1.6;
         }
+
+        @media (max-width: 640px) {
+            .calculator, .tips-container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            input {
+                padding: 0.8rem 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="calculator">
-        <h1>Métabolisme Basal</h1>
+        <h1>Calculateur Métabolisme</h1>
+
+        <div class="gender-switch">
+            <input type="radio" name="gender" id="male" value="male" checked>
+            <label for="male" class="gender-label">
+                <i class="fas fa-mars"></i>
+                Homme
+            </label>
+            <input type="radio" name="gender" id="female" value="female">
+            <label for="female" class="gender-label">
+                <i class="fas fa-venus"></i>
+                Femme
+            </label>
+        </div>
+
         <div class="input-group">
             <label for="weight">Poids (kg)</label>
             <div class="input-wrapper">
@@ -260,7 +323,7 @@
         <button onclick="calculate()">
             Calculer
         </button>
-        <div class="result" id="result"></div>
+        <div id="result" class="result"></div>
     </div>
 
     <div class="tips-container">
@@ -310,34 +373,64 @@
         </div>
     </div>
 
-
     <script>
         function calculate() {
             const result = document.getElementById('result');
             result.classList.add('show');
             result.textContent = "Calcul en cours...";
             
-            setTimeout(() => {
-                const weight = document.getElementById('weight').value;
-                const height = document.getElementById('height').value;
-                const age = document.getElementById('age').value;
-                const duration = document.getElementById('duration').value;
-                
-                if (!weight || !height || !age) {
-                    result.textContent = "Veuillez remplir tous les champs requis";
-                    return;
-                }
-                
-                const bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
-                result.textContent = `Votre métabolisme de base est de ${Math.round(bmr)} calories par jour`;
-            }, 500);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const age = parseFloat(document.getElementById('age').value);
+            const isMale = document.getElementById('male').checked;
+            
+            if (!weight || !height || !age) {
+                result.innerHTML = '<span style="color: #ef4444;">Veuillez remplir tous les champs requis</span>';
+                return;
+            }
+
+            // Calcul BMR avec la correction selon le genre
+            const genderCorrection = isMale ? 5 : -161;
+            const bmr = (10 * weight) + (6.25 * height) - (5 * age) + genderCorrection;
+            
+            // Calcul TDEE avec le niveau d'activité
+            const duration = parseFloat(document.getElementById('duration').value) || 0;
+            let tdee = bmr;
+            if (duration) {
+                // Estimation des calories supplémentaires (500 cal/heure d'entraînement en moyenne)
+                tdee += duration * 500;
+            }
+
+            // Affichage des résultats
+            const resultHTML = `
+                <div style="margin-bottom: 1rem;">
+                    <div style="color: ${isMale ? '#3b82f6' : '#ec4899'}; margin-bottom: 0.5rem;">
+                        Métabolisme de base (BMR):
+                    </div>
+                    <strong>${Math.round(bmr)} calories/jour</strong>
+                </div>
+                ${duration ? `
+                <div>
+                    <div style="color: ${isMale ? '#3b82f6' : '#ec4899'}; margin-bottom: 0.5rem;">
+                        Total avec activité physique:
+                    </div>
+                    <strong>${Math.round(tdee)} calories/jour</strong>
+                </div>
+                ` : ''}
+            `;
+            
+            result.innerHTML = resultHTML;
         }
 
-        const inputs = document.querySelectorAll('input[type="number"]');
+        // Event Listeners
+        const inputs = document.querySelectorAll('input[type="number"], input[type="radio"]');
         inputs.forEach(input => {
-            input.addEventListener('input', function() {
-                if (this.value < 0) this.value = 0;
-            });
+            if (input.type === 'number') {
+                input.addEventListener('input', function() {
+                    if (this.value < 0) this.value = 0;
+                });
+            }
+            input.addEventListener('change', calculate);
         });
     </script>
 </body>
