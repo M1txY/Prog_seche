@@ -209,6 +209,66 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Tips Section */
+        .tips-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 1.5rem;
+            background: var(--input-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tips-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tip {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tip:last-child {
+            margin-bottom: 0;
+        }
+
+        .tip-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .tip-content {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .calculator, .tips-container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            input {
+                padding: 0.8rem 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -264,6 +324,54 @@
         <div id="result" class="result"></div>
     </div>
 
+    <!-- Tips Section -->
+    <div class="tips-container">
+        <div class="tips-title">
+            <i class="fas fa-lightbulb"></i>
+            Principes fondamentaux
+        </div>
+        
+        <div class="tip">
+            <div class="tip-header">
+                <i class="fas fa-calculator"></i>
+                Comprendre la TDEE
+            </div>
+            <div class="tip-content">
+                La TDEE (Total Daily Energy Expenditure) est la quantité totale de calories que vous brûlez par jour. Elle inclut votre métabolisme basal + activité physique + digestion. Pour perdre du poids, visez un déficit de 20-25% de votre TDEE.
+            </div>
+        </div>
+
+        <div class="tip">
+            <div class="tip-header">
+                <i class="fas fa-chart-line"></i>
+                Principe de la sèche
+            </div>
+            <div class="tip-content">
+                Une sèche efficace nécessite un déficit calorique modéré (300-500 kcal/jour), un apport protéiné élevé (2g/kg de poids) et un entraînement en force maintenu. Évitez les déficits trop agressifs qui peuvent entraîner une perte musculaire.
+            </div>
+        </div>
+
+        <div class="tip">
+            <div class="tip-header">
+                <i class="fas fa-dumbbell"></i>
+                Préservation musculaire
+            </div>
+            <div class="tip-content">
+                Pour préserver votre masse musculaire en sèche : maintenez votre force à l'entraînement, gardez une alimentation riche en protéines, limitez le cardio intensif, et assurez-vous d'avoir un sommeil de qualité (7-9h/nuit).
+            </div>
+        </div>
+
+        <div class="tip">
+            <div class="tip-header">
+                <i class="fas fa-clock"></i>
+                Patience et constance
+            </div>
+            <div class="tip-content">
+                Une perte de poids saine se situe entre 0,5 et 1% de votre poids par semaine. Privilégiez une approche progressive et durable plutôt que les régimes restrictifs. Pesez-vous dans les mêmes conditions et suivez vos moyennes hebdomadaires.
+            </div>
+        </div>
+    </div>
+
     <script>
         function calculate() {
             const result = document.getElementById('result');
@@ -280,8 +388,11 @@
                 return;
             }
 
+            // Calcul BMR avec la correction selon le genre
             const genderCorrection = isMale ? 5 : -161;
             const bmr = (10 * weight) + (6.25 * height) - (5 * age) + genderCorrection;
+            
+            // Calcul TDEE avec le niveau d'activité
             const duration = parseFloat(document.getElementById('duration').value) || 0;
             let tdee = bmr;
             if (duration) {
@@ -308,11 +419,15 @@
             result.innerHTML = resultHTML;
         }
 
-        const numberInputs = document.querySelectorAll('input[type="number"]');
-        numberInputs.forEach(input => {
-            input.addEventListener('input', function() {
-                if (this.value < 0) this.value = 0;
-            });
+        // Event Listeners
+        const inputs = document.querySelectorAll('input[type="number"], input[type="radio"]');
+        inputs.forEach(input => {
+            if (input.type === 'number') {
+                input.addEventListener('input', function() {
+                    if (this.value < 0) this.value = 0;
+                });
+            }
+            input.addEventListener('change', calculate);
         });
     </script>
 </body>
