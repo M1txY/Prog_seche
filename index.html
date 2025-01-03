@@ -1,40 +1,249 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Macro Calculator</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <title>Calculateur de Macros</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #161616;
+            --input-bg: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #8f9ba8;
+            --accent-color: #3b82f6;
+            --border-color: #2a2a2a;
+            --hover-color: #2f2f2f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calculator {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 1.8rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        input::placeholder {
+            color: #4a5568;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .input-group {
+            margin-bottom: 1.8rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .result {
+            margin-top: 1.8rem;
+            padding: 1.2rem;
+            border-radius: 12px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .calculator {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            input {
+                padding: 0.8rem 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="header">
-        <link href="./css/header.css" rel="stylesheet" />
-
-        <a href="./index.html">Home</a>
-        <a href="./pages/base_pratique.html">Les Fondamentaux</a>
-    </div>
     <div class="calculator">
-        <h1>Métabolisme basal</h1>
+        <h1>Métabolisme Basal</h1>
         <div class="input-group">
-            <label for="weight">Weight (kg):</label>
-            <input type="number" id="weight">
+            <label for="weight">Poids (kg)</label>
+            <div class="input-wrapper">
+                <input type="number" id="weight" placeholder="Entrez votre poids">
+                <i class="fas fa-weight"></i>
+            </div>
         </div>
         <div class="input-group">
-            <label for="height">Height (cm):</label>
-            <input type="number" id="height">
+            <label for="height">Taille (cm)</label>
+            <div class="input-wrapper">
+                <input type="number" id="height" placeholder="Entrez votre taille">
+                <i class="fas fa-ruler-vertical"></i>
+            </div>
         </div>
         <div class="input-group">
-            <label for="age">Age:</label>
-            <input type="number" id="age">
+            <label for="age">Âge</label>
+            <div class="input-wrapper">
+                <input type="number" id="age" placeholder="Entrez votre âge">
+                <i class="fas fa-user"></i>
+            </div>
         </div>
         <div class="input-group">
-            <label for="duration">Duration of Workout (hours):</label>
-            <input type="number" step="0.5" id="duration">
+            <label for="duration">Durée d'entraînement (heures)</label>
+            <div class="input-wrapper">
+                <input type="number" step="0.5" id="duration" placeholder="Durée de l'entraînement">
+                <i class="fas fa-stopwatch"></i>
+            </div>
         </div>
-        <button onclick="calculate()">Calculate</button>
+        <button onclick="calculate()">
+            Calculer
+        </button>
         <div id="result" class="result"></div>
     </div>
 
-    <script src="./js/script.js"></script>
+    <script>
+        function calculate() {
+            const result = document.getElementById('result');
+            result.classList.add('show');
+            result.textContent = "Calcul en cours...";
+            
+            setTimeout(() => {
+                const weight = document.getElementById('weight').value;
+                const height = document.getElementById('height').value;
+                const age = document.getElementById('age').value;
+                const duration = document.getElementById('duration').value;
+                
+                if (!weight || !height || !age) {
+                    result.textContent = "Veuillez remplir tous les champs requis";
+                    return;
+                }
+                
+                const bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+                result.textContent = `Votre métabolisme de base est de ${Math.round(bmr)} calories par jour`;
+            }, 500);
+        }
+
+        const inputs = document.querySelectorAll('input[type="number"]');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value < 0) this.value = 0;
+            });
+        });
+    </script>
 </body>
 </html>
