@@ -6,6 +6,7 @@
     <title>Calculateur de Macros</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Variables */
         :root {
             --bg-color: #0a0a0a;
             --card-bg: #161616;
@@ -17,6 +18,7 @@
             --hover-color: #2f2f2f;
         }
 
+        /* Reset */
         * {
             margin: 0;
             padding: 0;
@@ -24,6 +26,7 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
+        /* Layout */
         body {
             background-color: var(--bg-color);
             color: var(--text-primary);
@@ -35,6 +38,7 @@
             padding: 20px;
         }
 
+        /* Calculator */
         .calculator {
             background: var(--card-bg);
             padding: 2.5rem;
@@ -52,6 +56,7 @@
             font-weight: 700;
         }
 
+        /* Gender Switch */
         .gender-switch {
             display: flex;
             justify-content: center;
@@ -71,48 +76,52 @@
             height: 0;
         }
 
-        .gender-label {
+        .gender-switch label {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            padding: 0.8rem;
+            padding: 0.8rem 0;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             color: var(--text-secondary);
-            user-select: none;
+            line-height: 1;
         }
 
-        .gender-label:hover {
+        .gender-switch label:hover {
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .gender-label i {
+        .gender-switch label i {
             font-size: 1.2rem;
         }
 
-        .gender-switch input[type="radio"]:checked + .gender-label {
-            color: white;
-            font-weight: 500;
-        }
-
-        #male:checked + .gender-label {
+        #male:checked + label {
             background: #3b82f6;
             box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+            color: white;
         }
 
-        #female:checked + .gender-label {
+        #female:checked + label {
             background: #ec4899;
             box-shadow: 0 2px 4px rgba(236, 72, 153, 0.2);
+            color: white;
         }
 
+        /* Input Groups */
         .input-group {
             margin-bottom: 1.8rem;
             position: relative;
-            display: flex;
-            flex-direction: column;
+        }
+
+        .input-group > label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
         .input-wrapper {
@@ -120,15 +129,7 @@
             width: 100%;
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        input {
+        input[type="number"] {
             width: 100%;
             padding: 0.75rem 1rem;
             border: 2px solid var(--border-color);
@@ -139,32 +140,32 @@
             color: var(--text-primary);
         }
 
-        input:focus {
+        input[type="number"]:focus {
             outline: none;
             border-color: var(--accent-color);
             box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
         }
 
-        input::placeholder {
+        input[type="number"]::placeholder {
             color: #4a5568;
         }
 
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
-        .input-group i {
+        .input-wrapper i {
             position: absolute;
             right: 1.2rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-secondary);
             opacity: 0.5;
-            z-index: 1;
         }
 
+        /* Button */
         button {
             width: 100%;
             padding: 1rem;
@@ -188,6 +189,7 @@
             transform: translateY(1px);
         }
 
+        /* Result */
         .result {
             margin-top: 1.5rem;
             padding: 1rem;
@@ -196,24 +198,19 @@
             text-align: center;
             font-weight: 500;
             display: none;
+            animation: slideUp 0.3s ease;
         }
 
         .result.show {
             display: block;
-            animation: slideUp 0.3s ease;
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Tips Section */
         .tips-container {
             width: 100%;
             max-width: 500px;
@@ -221,13 +218,11 @@
             background: var(--input-bg);
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
         }
 
         .tips-title {
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -260,6 +255,7 @@
             line-height: 1.6;
         }
 
+        /* Responsive */
         @media (max-width: 640px) {
             .calculator, .tips-container {
                 padding: 1.5rem;
@@ -278,54 +274,57 @@
 <body>
     <div class="calculator">
         <h1>Calculateur Métabolisme</h1>
-
+        
         <div class="gender-switch">
             <input type="radio" name="gender" id="male" value="male" checked>
-            <label for="male" class="gender-label">
+            <label for="male">
                 <i class="fas fa-mars"></i>
                 Homme
             </label>
             <input type="radio" name="gender" id="female" value="female">
-            <label for="female" class="gender-label">
+            <label for="female">
                 <i class="fas fa-venus"></i>
                 Femme
             </label>
         </div>
 
         <div class="input-group">
-            <label for="weight">Poids (kg)</label>
+            <label>Poids (kg)</label>
             <div class="input-wrapper">
                 <input type="number" id="weight" placeholder="Entrez votre poids">
                 <i class="fas fa-weight"></i>
             </div>
         </div>
+
         <div class="input-group">
-            <label for="height">Taille (cm)</label>
+            <label>Taille (cm)</label>
             <div class="input-wrapper">
                 <input type="number" id="height" placeholder="Entrez votre taille">
                 <i class="fas fa-ruler-vertical"></i>
             </div>
         </div>
+
         <div class="input-group">
-            <label for="age">Âge</label>
+            <label>Âge</label>
             <div class="input-wrapper">
                 <input type="number" id="age" placeholder="Entrez votre âge">
                 <i class="fas fa-user"></i>
             </div>
         </div>
+
         <div class="input-group">
-            <label for="duration">Durée d'entraînement (heures)</label>
+            <label>Durée d'entraînement (heures)</label>
             <div class="input-wrapper">
                 <input type="number" step="0.5" id="duration" placeholder="Durée de l'entraînement">
                 <i class="fas fa-stopwatch"></i>
             </div>
         </div>
-        <button onclick="calculate()">
-            Calculer
-        </button>
+
+        <button onclick="calculate()">Calculer</button>
         <div id="result" class="result"></div>
     </div>
 
+    <!-- Tips Section -->
     <div class="tips-container">
         <div class="tips-title">
             <i class="fas fa-lightbulb"></i>
@@ -397,11 +396,9 @@
             const duration = parseFloat(document.getElementById('duration').value) || 0;
             let tdee = bmr;
             if (duration) {
-                // Estimation des calories supplémentaires (500 cal/heure d'entraînement en moyenne)
                 tdee += duration * 500;
             }
 
-            // Affichage des résultats
             const resultHTML = `
                 <div style="margin-bottom: 1rem;">
                     <div style="color: ${isMale ? '#3b82f6' : '#ec4899'}; margin-bottom: 0.5rem;">
