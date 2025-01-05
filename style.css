@@ -1,0 +1,335 @@
+/* Variables */
+:root {
+    --bg-color: #0a0a0a;
+    --card-bg: #161616;
+    --input-bg: #1e1e1e;
+    --text-primary: #ffffff;
+    --text-secondary: #8f9ba8;
+    --accent-color: #3b82f6;
+    --border-color: #2a2a2a;
+    --hover-color: #2f2f2f;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Layout */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 20px;
+}
+
+/* Calculator */
+.calculator {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid var(--border-color);
+}
+
+h1 {
+    color: var(--text-primary);
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Gender Switch */
+.gender-switch {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    background: var(--input-bg);
+    border-radius: 12px;
+    padding: 0.5rem;
+    position: relative;
+    width: 100%;
+}
+
+.gender-switch input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.gender-switch label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+    line-height: 1;
+}
+
+.gender-switch label:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.gender-switch label i {
+    font-size: 1.2rem;
+}
+
+#male:checked + label {
+    background: #3b82f6;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    color: white;
+}
+
+#female:checked + label {
+    background: #ec4899;
+    box-shadow: 0 2px 4px rgba(236, 72, 153, 0.2);
+    color: white;
+}
+
+/* Input Groups */
+.input-group {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.input-group > label {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--input-bg);
+    color: var(--text-primary);
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+input[type="number"]::placeholder {
+    color: #4a5568;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-wrapper i {
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Result */
+.result {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: var(--input-bg);
+    font-weight: 500;
+    display: none;
+    animation: slideUp 0.3s ease;
+}
+
+.result.show {
+    display: block;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tips Section */
+.tips-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 1.5rem;
+    background: var(--input-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.tips-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tip {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.tip:last-child {
+    margin-bottom: 0;
+}
+
+.tip-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.tip-content {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.tip-content ul {
+    padding-left: 2rem;
+}
+
+.result ul {
+    padding-left: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .calculator, .tips-container {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    input {
+        padding: 0.8rem 1rem;
+    }
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}
+
+/* Style de l'icône dans le libellé */
+#activity-level-group label i {
+    color: #2196F3;
+    margin-right: 0.5rem;
+}
+
+/* Style des options du sélecteur avec icônes */
+#activity-level option i {
+    margin-right: 0.5rem;
+    color: #333;
+}
+
+/* Amélioration générale pour les icônes */
+.input-group i {
+    font-size: 1rem;
+    vertical-align: middle;
+}
+
+

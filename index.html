@@ -5,276 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculateur de Macros</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        /* Variables */
-        :root {
-            --bg-color: #0a0a0a;
-            --card-bg: #161616;
-            --input-bg: #1e1e1e;
-            --text-primary: #ffffff;
-            --text-secondary: #8f9ba8;
-            --accent-color: #3b82f6;
-            --border-color: #2a2a2a;
-            --hover-color: #2f2f2f;
-        }
-
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        /* Layout */
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            padding: 20px;
-        }
-
-        /* Calculator */
-        .calculator {
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 500px;
-            border: 1px solid var(--border-color);
-        }
-
-        h1 {
-            color: var(--text-primary);
-            font-size: 1.75rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        /* Gender Switch */
-        .gender-switch {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            background: var(--input-bg);
-            border-radius: 12px;
-            padding: 0.5rem;
-            position: relative;
-            width: 100%;
-        }
-
-        .gender-switch input[type="radio"] {
-            opacity: 0;
-            position: absolute;
-            width: 0;
-            height: 0;
-        }
-
-        .gender-switch label {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.8rem 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--text-secondary);
-            line-height: 1;
-        }
-
-        .gender-switch label:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .gender-switch label i {
-            font-size: 1.2rem;
-        }
-
-        #male:checked + label {
-            background: #3b82f6;
-            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-            color: white;
-        }
-
-        #female:checked + label {
-            background: #ec4899;
-            box-shadow: 0 2px 4px rgba(236, 72, 153, 0.2);
-            color: white;
-        }
-
-        /* Input Groups */
-        .input-group {
-            margin-bottom: 1.8rem;
-            position: relative;
-        }
-
-        .input-group > label {
-            display: block;
-            margin-bottom: 0.8rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        .input-wrapper {
-            position: relative;
-            width: 100%;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: var(--input-bg);
-            color: var(--text-primary);
-        }
-
-        input[type="number"]:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
-        }
-
-        input[type="number"]::placeholder {
-            color: #4a5568;
-        }
-
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .input-wrapper i {
-            position: absolute;
-            right: 1.2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            opacity: 0.5;
-        }
-
-        /* Button */
-        button {
-            width: 100%;
-            padding: 1rem;
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 1rem;
-        }
-
-        button:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
-        }
-
-        button:active {
-            transform: translateY(1px);
-        }
-
-        /* Result */
-        .result {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 12px;
-            background: var(--input-bg);
-            text-align: center;
-            font-weight: 500;
-            display: none;
-            animation: slideUp 0.3s ease;
-        }
-
-        .result.show {
-            display: block;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Tips Section */
-        .tips-container {
-            width: 100%;
-            max-width: 500px;
-            padding: 1.5rem;
-            background: var(--input-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-        }
-
-        .tips-title {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .tip {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: var(--card-bg);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .tip:last-child {
-            margin-bottom: 0;
-        }
-
-        .tip-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--accent-color);
-            font-weight: 600;
-        }
-
-        .tip-content {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Responsive */
-        @media (max-width: 640px) {
-            .calculator, .tips-container {
-                padding: 1.5rem;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            input {
-                padding: 0.8rem 1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="calculator">
         <h1>Calculateur Métabolisme</h1>
-        
+
         <div class="gender-switch">
             <input type="radio" name="gender" id="male" value="male" checked>
             <label for="male">
@@ -313,122 +49,202 @@
         </div>
 
         <div class="input-group">
-            <label>Durée d'entraînement (heures)</label>
-            <div class="input-wrapper">
-                <input type="number" step="0.5" id="duration" placeholder="Durée de l'entraînement">
-                <i class="fas fa-stopwatch"></i>
-            </div>
+            <label>Afficher les macros ?</label>
+            <label class="switch">
+                <input type="checkbox" id="show-macros" onchange="toggleActivityLevel()">
+                <span class="slider round"></span>
+            </label>
         </div>
+
+        <div class="input-group" id="activity-level-group" style="display: none;">
+            <label>
+                <i class="fas fa-running"></i> Niveau d'activité
+            </label>
+            <select id="activity-level">
+                <option value="1.2"><i class="fas fa-chair"></i> Sédentaire</option>
+                <option value="1.375"><i class="fas fa-walking"></i> Légèrement actif</option>
+                <option value="1.55"><i class="fas fa-biking"></i> Modérément actif</option>
+                <option value="1.725"><i class="fas fa-dumbbell"></i> Très actif</option>
+                <option value="1.9"><i class="fas fa-running"></i> Extrêmement actif</option>
+            </select>
+        </div>
+        
 
         <button onclick="calculate()">Calculer</button>
         <div id="result" class="result"></div>
     </div>
 
-    <!-- Tips Section -->
     <div class="tips-container">
         <div class="tips-title">
             <i class="fas fa-lightbulb"></i>
             Principes fondamentaux
         </div>
         
+        <!-- Comprendre la TDEE -->
         <div class="tip">
             <div class="tip-header">
                 <i class="fas fa-calculator"></i>
-                Comprendre la TDEE
+                Comprendre votre TDEE
             </div>
             <div class="tip-content">
-                La TDEE (Total Daily Energy Expenditure) est la quantité totale de calories que vous brûlez par jour. Elle inclut votre métabolisme basal + activité physique + digestion. Pour perdre du poids, visez un déficit de 20-25% de votre TDEE.
+                Le TDEE (Total Daily Energy Expenditure) représente le nombre total de calories que vous brûlez chaque jour. Il se compose de votre métabolisme basal, de vos activités physiques et de la digestion. Pour perdre du poids, ciblez un déficit calorique de 20-25% de votre TDEE.
             </div>
         </div>
-
+        
+        <!-- Principe de la sèche -->
         <div class="tip">
             <div class="tip-header">
                 <i class="fas fa-chart-line"></i>
-                Principe de la sèche
+                Définir une sèche efficace
             </div>
             <div class="tip-content">
-                Une sèche efficace nécessite un déficit calorique modéré (300-500 kcal/jour), un apport protéiné élevé (2g/kg de poids) et un entraînement en force maintenu. Évitez les déficits trop agressifs qui peuvent entraîner une perte musculaire.
+                Une sèche réussie repose sur un déficit calorique modéré (300-500 kcal/jour), un apport élevé en protéines (2g/kg de poids corporel) et un maintien de l'entraînement en force. Évitez les déficits trop agressifs qui risquent de compromettre votre masse musculaire.
             </div>
         </div>
-
+        
+        <!-- Préservation musculaire -->
         <div class="tip">
             <div class="tip-header">
                 <i class="fas fa-dumbbell"></i>
-                Préservation musculaire
+                Priorité à la préservation musculaire
             </div>
             <div class="tip-content">
-                Pour préserver votre masse musculaire en sèche : maintenez votre force à l'entraînement, gardez une alimentation riche en protéines, limitez le cardio intensif, et assurez-vous d'avoir un sommeil de qualité (7-9h/nuit).
+                Conservez votre masse musculaire en : 
+                <ul>
+                    <li>Maintenant votre force à l’entraînement</li>
+                    <li>Consommant suffisamment de protéines</li>
+                    <li>Réduisant le cardio intensif</li>
+                    <li>Assurant un sommeil réparateur (7-9 heures par nuit)</li>
+                </ul>
             </div>
         </div>
-
+        
+        <!-- Patience et constance -->
         <div class="tip">
             <div class="tip-header">
                 <i class="fas fa-clock"></i>
                 Patience et constance
             </div>
             <div class="tip-content">
-                Une perte de poids saine se situe entre 0,5 et 1% de votre poids par semaine. Privilégiez une approche progressive et durable plutôt que les régimes restrictifs. Pesez-vous dans les mêmes conditions et suivez vos moyennes hebdomadaires.
+                Une perte de poids saine et durable se situe entre 0,5% et 1% de votre poids par semaine. Adoptez une approche progressive et évitez les régimes trop restrictifs. Pour un suivi optimal, pesez-vous dans des conditions similaires et analysez vos moyennes hebdomadaires.
             </div>
         </div>
     </div>
 
     <script>
+        function toggleActivityLevel() {
+            const showMacros = document.getElementById('show-macros').checked;
+            const activityLevelGroup = document.getElementById('activity-level-group');
+            activityLevelGroup.style.display = showMacros ? 'block' : 'none';
+        }
+
         function calculate() {
             const result = document.getElementById('result');
             result.classList.add('show');
             result.textContent = "Calcul en cours...";
-            
-            const weight = parseFloat(document.getElementById('weight').value);
-            const height = parseFloat(document.getElementById('height').value);
-            const age = parseFloat(document.getElementById('age').value);
-            const isMale = document.getElementById('male').checked;
-            
-            if (!weight || !height || !age) {
-                result.innerHTML = '<span style="color: #ef4444;">Veuillez remplir tous les champs requis</span>';
-                return;
-            }
 
-            // Calcul BMR avec la correction selon le genre
+            const weight = parseFloat(document.getElementById('weight').value) || 70;
+            const height = parseFloat(document.getElementById('height').value) || 170;
+            const age = parseFloat(document.getElementById('age').value) || 30;
+            const isMale = document.getElementById('male').checked;
+            const showMacros = document.getElementById('show-macros').checked;
+
             const genderCorrection = isMale ? 5 : -161;
             const bmr = (10 * weight) + (6.25 * height) - (5 * age) + genderCorrection;
-            
-            // Calcul TDEE avec le niveau d'activité
-            const duration = parseFloat(document.getElementById('duration').value) || 0;
-            let tdee = bmr;
-            if (duration) {
-                tdee += duration * 500;
-            }
 
-            const resultHTML = `
+            let resultHTML = `
                 <div style="margin-bottom: 1rem;">
                     <div style="color: ${isMale ? '#3b82f6' : '#ec4899'}; margin-bottom: 0.5rem;">
                         Métabolisme de base (BMR):
                     </div>
                     <strong>${Math.round(bmr)} calories/jour</strong>
                 </div>
-                ${duration ? `
-                <div>
-                    <div style="color: ${isMale ? '#3b82f6' : '#ec4899'}; margin-bottom: 0.5rem;">
-                        Total avec activité physique:
-                    </div>
-                    <strong>${Math.round(tdee)} calories/jour</strong>
-                </div>
-                ` : ''}
             `;
-            
+
+            if (showMacros) {
+                const activityFactor = parseFloat(document.getElementById('activity-level').value) || 1.2;
+                const tdee = bmr * activityFactor;
+
+                const protein = Math.round(weight * 2); // 2g/kg de poids corporel
+                const fat = Math.round(weight * 0.8); // 0.8g/kg de poids corporel
+                const carbs = Math.round((tdee - (protein * 4 + fat * 9)) / 4); // Le reste en glucides
+
+                resultHTML += `
+                    <div style="margin-top: 1rem;">
+                        <strong>Macros suggérées :</strong>
+                        <ul>
+                            <li>Protéines : ${protein} g</li>
+                            <li>Lipides : ${fat} g</li>
+                            <li>Glucides : ${carbs} g</li>
+                        </ul>
+                    </div>
+                `;
+            }
+
             result.innerHTML = resultHTML;
         }
-
-        // Event Listeners
-        const inputs = document.querySelectorAll('input[type="number"], input[type="radio"]');
-        inputs.forEach(input => {
-            if (input.type === 'number') {
-                input.addEventListener('input', function() {
-                    if (this.value < 0) this.value = 0;
-                });
-            }
-            input.addEventListener('change', calculate);
-        });
     </script>
+
+    <style>
+                /* Style du groupe de sélection du niveau d'activité */
+        #activity-level-group {
+            margin-top: 1rem;
+            display: none; /* Masqué par défaut */
+        }
+
+        #activity-level-group label {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* Style du sélecteur déroulant */
+        #activity-level {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Effet au survol du sélecteur */
+        #activity-level:hover {
+            border-color: #2196F3;
+            box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+        }
+
+        /* Style des options du sélecteur */
+        #activity-level option {
+            font-size: 1rem;
+            padding: 0.5rem;
+        }
+
+        /* Style global des étiquettes */
+        label {
+            font-weight: 600;
+        }
+        /* Style de l'icône dans le libellé */
+        #activity-level-group label i {
+            color: #2196F3;
+            margin-right: 0.5rem;
+        }
+
+        /* Style des options du sélecteur avec icônes */
+        #activity-level option i {
+            margin-right: 0.5rem;
+            color: #333;
+        }
+
+        /* Amélioration générale pour les icônes */
+        .input-group i {
+            font-size: 1rem;
+            vertical-align: middle;
+        }
+
+
+    </style>
 </body>
 </html>
